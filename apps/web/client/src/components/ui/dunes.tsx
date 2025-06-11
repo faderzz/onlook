@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import { cn } from '@onlook/ui/utils';
 
-export function Dunes() {
+export function Dunes({ className }: { className?: string }) {
     return (
-        <div className="hidden w-full lg:block md:block m-6">
+        <div className={cn("hidden w-full lg:block md:block m-6", className)}>
             <Image
                 className="w-full h-full object-cover rounded-xl hidden dark:flex"
                 src={'/assets/dunes-login-dark.png'}

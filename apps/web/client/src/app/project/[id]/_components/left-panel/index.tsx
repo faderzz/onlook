@@ -3,8 +3,10 @@ import { transKeys } from '@/i18n/keys';
 import { EditorMode, LeftPanelTabValue } from '@onlook/models';
 import { Icons } from '@onlook/ui/icons';
 import { cn } from '@onlook/ui/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 import { observer } from 'mobx-react-lite';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { BrandTab } from './brand-tab';
 import { HelpDropdown } from './help-dropdown';
 import { ImagesTab } from './image-tab';
@@ -63,6 +65,7 @@ export const LeftPanel = observer(() => {
     const t = useTranslations();
     const isLocked = editorEngine.state.leftPanelLocked;
     const selectedTab = editorEngine.state.leftPanelTab;
+    const [hoveredTab, setHoveredTab] = useState<LeftPanelTabValue | null>(null);
 
     const handleMouseEnter = (tab: LeftPanelTabValue) => {
         if (isLocked) {

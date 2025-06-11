@@ -8,9 +8,10 @@ import { Toaster } from '@onlook/ui/sonner';
 import { type Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
-import { Inter } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 import { ThemeProvider } from './_components/theme';
 import { AuthProvider } from './auth/auth-context';
+import { cn } from '@onlook/ui/utils';
 
 export const metadata: Metadata = {
     title: 'Onlook – Cursor for Designers',
@@ -44,14 +45,27 @@ export const metadata: Metadata = {
 const inter = Inter({
     subsets: ['latin'],
     variable: '--font-inter',
+    display: 'swap',
+});
+
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['300', '400', '500', '600', '700'],
+    variable: '--font-poppins',
+    display: 'swap',
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const locale = await getLocale();
 
     return (
-        <html lang={locale} className={inter.variable} suppressHydrationWarning>
-            <body>
+        <html lang={locale} className={cn(inter.variable, poppins.variable)} suppressHydrationWarning>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="theme-color" content="#000000" />
+                <meta name="description" content="Onlook - Make your designs real" />
+            </head>
+            <body className="antialiased">
                 <FeatureFlagsProvider>
                     <PostHogProvider>
                         <ThemeProvider
@@ -64,7 +78,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                                 <AuthProvider>
                                     <NextIntlClientProvider>
                                         {children}
-                                        <Toaster />
+                                        <Toaster position="top-center" richColors closeButton />
                                     </NextIntlClientProvider>
                                 </AuthProvider>
                             </TRPCReactProvider>
